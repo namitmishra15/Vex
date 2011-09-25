@@ -24,12 +24,27 @@
 
 //state flags
 
-//functions
-//programmers, flesh these out w/ your current knowledge
-//rely on info from the tutorials for this
-void setDrive(int lpwm, int rpwm);
-void setLift(int pwm);
-void clearEncoders();
+//function prototypes for more complex functions
+
+//inline functions for simpler functions
+inline void setDrive(int lpwm, int rpwm)
+{
+	motor[LDrive1]=motor[LDrive2] = lpwm;
+	motor[RDrive1]=motor[RDrive2] = rpwm;
+}
+inline void setLift(int pwm)
+{
+	motor[LLift] = motor[RLift] = pwm;
+}
+inline void clearDriveEncoders()
+{
+	SensorValue[LDriveEncoder] = SensorValue[RDriveEncoder] = 0;
+}
+
+inline void clearLiftEncoder()
+{
+	SensorValue[LiftEncoder] = 0;
+}
 
 void pre_auton()
 {
@@ -49,6 +64,7 @@ task usercontrol()
 
 	while (true)
 	{
-	  UserControlCodePlaceholderForTesting(); // Remove this function call once you have "real" code.
+		setDrive(vexRT[Ch2], vexRT[Ch3]);
+		setLift(vexRT[Ch1]);  
 	}
 }
